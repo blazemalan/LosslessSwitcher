@@ -58,6 +58,27 @@ This still happens today, with macOS 12.3.1, despite iOS's Music app having such
 
 I think this improvement might be well appreciated by many, hence this project is here, free and open source.
 
+## Scripting
+
+A custom shell script can be executed every time the sample rate changes. To use this feature, select a script using the 'Scripting > Select Script...' menu item. You can stop running the script by selecting 'Clear Selection'.
+
+When the script is executed, it receives the following arguments:
+- `$1`: The sample rate in Hz, as an integer.
+- `$2`: The bit depth (passed only when 'Bit Depth Switching' is enabled and a bit depth was detected).
+
+Example script:
+```
+#!/bin/sh
+echo "Sample rate changed to $1 Hz"
+if [ ! -z "$2" ]; then
+  echo "Bit depth is $2 bit"
+fi
+```
+
+## Prefer Closest Sample Rate Multiple
+
+The 'Prefer Closest Sample Rate Multiple' menu toggle changes how the app behaves when your audio device does not support the exact sample rate of the current track. When enabled, the app may switch to a supported sample rate that is exactly half of the detected rate, instead of choosing the closest numerical match.
+
 ## Prerequisites
 Due to how the app works, this app is not, and cannot be sandboxed.
 It also has the following requirement, due to the use of `OSLog` API: 
